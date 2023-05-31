@@ -1,0 +1,41 @@
+html,
+body,
+.intro {
+  height: 100%;
+}
+
+.navbar {
+    
+    background: #633694;
+    background: -webkit-linear-gradient(to top, rgba(37, 117, 252, 1), rgba(37, 117, 252, 1));
+    background: linear-gradient(to top, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+}
+.gradient-custom-2 {
+  
+  background: #6a11cb;
+  background: -webkit-linear-gradient(to top, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+  background: linear-gradient(to top, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+}
+
+table td,
+table th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+thead th,
+tbody th {
+  color: #fff;
+}
+
+tbody td {
+  font-weight: 500;
+  color: rgba(255,255,255,.65);
+}
+
+.table-responsive {
+    display: block;
+    max-height: 400px; /* Atur tinggi maksimum yang sesuai */
+    overflow-y: auto; /* Aktifkan overflow scroll untuk tabel jika melebihi tinggi maksimum */
+  }
