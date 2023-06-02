@@ -641,6 +641,27 @@
               `;
         });
       });
+
+
+      function generateDataPoint() {
+      var randomValue = Math.floor(Math.random() * 1000) + 1;
+      var timestamp = new Date().toLocaleTimeString();
+
+      // Add the new data point to the chart
+      chart.data.labels.push(timestamp);
+      chart.data.datasets[0].data.push(randomValue);
+
+      // Limit the number of data points displayed to 10
+      if (chart.data.labels.length > 10) {
+        chart.data.labels.shift();
+        chart.data.datasets[0].data.shift();
+      }
+
+      // Update the chart
+      chart.update();
+    }
+
+    
     </script>
 
     <!-- Bootstrap core JavaScript-->
