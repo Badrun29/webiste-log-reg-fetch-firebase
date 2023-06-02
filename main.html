@@ -585,7 +585,7 @@
       firebaseRef.on("value", function (snapshot) {
         snapshot.forEach(function (element) {
           // console.log(element.key);
-          document.querySelector("#root").innerHTML += `
+          document.querySelector("#root").innerHTML = `
                 <div>${element.val()}</div>
               `;
         });
