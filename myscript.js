@@ -27,6 +27,7 @@ const database = getDatabase(app);
 let signinButton = document.getElementById("signin-button");
 let signupButton = document.getElementById("signup-button");
 
+
 signupButton.addEventListener("click", (e) => {
   let name = document.getElementById("name").value;
   let nohp = document.getElementById("nohp").value;
@@ -46,7 +47,8 @@ signupButton.addEventListener("click", (e) => {
       })
         .then(() => {
           // Data saved successfully!
-          alert("user telah sukses dibuat");
+          alert("Berhasil! membuat user baru");
+          
         })
         .catch((error) => {
           //the write failed
@@ -90,3 +92,55 @@ signinButton.addEventListener("click", (e) => {
     .then(() => {})
     .catch((error) => {});
 });
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    document.getElementById("user_div").style.display = "block";
+    document.getElementById("login_div").style.display = "none";
+    document.getElementById("signup_div").style.display = "none";
+
+    var user = firebase.auth().currentUser;
+
+    if(user != null){
+      var email_id = user.email;
+      document.getElementById("user_para").innerHTML = "Welcome User : " + email_id;
+
+    }
+
+  } else {
+    // No user is signed in.
+    document.getElementById("user_div").style.display = "none";
+    document.getElementById("login_div").style.display = "block";
+    document.getElementById("signup_div").style.display = "block";
+  }
+});
+
+function login(){
+
+  var userEmail = document.getElementById("email_field").value;
+  var userPass = document.getElementById("password_field").value;
+
+  firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    window.alert("Error : " + errorMessage);
+  });
+}
+
+function signup(){
+
+  var userEmail = document.getElementById("email_field").value;
+  var userPass = document.getElementById("password_field").value;
+  console.log(userEmail);
+  console.log(userPass);
+  firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    window.alert("Error : " + errorMessage);
+  });
+}
+
+function logout(){
+  firebase.auth().signOut();
+}

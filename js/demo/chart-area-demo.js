@@ -29,6 +29,9 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
+
+
+
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
@@ -46,7 +49,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      data: [21, 23, 12, 15, 21, 23, 12, 15, 21, 23, 12, 15],
     }],
   },
   options: {
@@ -116,3 +119,70 @@ var myLineChart = new Chart(ctx, {
     }
   }
 });
+
+// Mendapatkan elemen dengan id "time"
+var timeElement = document.getElementById('time');
+
+// Fungsi untuk mengupdate waktu secara real-time
+function updateTime() {
+  // Membuat objek Date untuk mendapatkan waktu saat ini
+  var currentTime = new Date();
+
+  // Mendapatkan jam, menit, dan detik dari objek Date
+  var hours = currentTime.getHours();
+  var minutes = currentTime.getMinutes();
+  var seconds = currentTime.getSeconds();
+
+  // Format waktu dengan menambahkan leading zero jika angka kurang dari 10
+  var formattedTime = addLeadingZero(hours) + ":" + addLeadingZero(minutes) + ":" + addLeadingZero(seconds);
+
+  // Menampilkan waktu di elemen dengan id "time"
+  timeElement.innerHTML = formattedTime;
+}
+
+// Fungsi untuk menambahkan leading zero jika angka kurang dari 10
+function addLeadingZero(number) {
+  return (number < 10 ? "0" : "") + number;
+}
+
+// Memanggil fungsi updateTime setiap detik
+setInterval(updateTime, 1000);
+
+// Mendapatkan elemen dengan id "date"
+var dateElement = document.getElementById('date');
+
+// Fungsi untuk mendapatkan nama hari dalam bahasa Inggris
+function getDayName(dayIndex) {
+  var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  return days[dayIndex];
+}
+
+// Fungsi untuk mendapatkan nama bulan dalam bahasa Inggris
+function getMonthName(monthIndex) {
+  var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  return months[monthIndex];
+}
+
+// Fungsi untuk mengupdate tanggal secara real-time
+function updateDate() {
+  // Membuat objek Date untuk mendapatkan tanggal saat ini
+  var currentDate = new Date();
+
+  // Mendapatkan hari, bulan, dan tahun dari objek Date
+  var day = currentDate.getDay();
+  var month = currentDate.getMonth();
+  var year = currentDate.getFullYear();
+
+  // Mendapatkan nama hari dan bulan
+  var dayName = getDayName(day);
+  var monthName = getMonthName(month);
+
+  // Format tanggal
+  var formattedDate = dayName + ', ' + monthName + ' ' + year;
+
+  // Menampilkan tanggal di elemen dengan id "date"
+  dateElement.innerHTML = formattedDate;
+}
+
+// Memanggil fungsi updateDate saat halaman dimuat
+updateDate();

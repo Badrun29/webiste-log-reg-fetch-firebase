@@ -5,7 +5,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="style.css" />
     <title>Sign in & Sign up Form</title>
   </head>
@@ -21,24 +24,29 @@
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" id="psw_signin" autocomplete="new-password" />
+              <input
+                type="password"
+                placeholder="Password"
+                id="psw_signin"
+                autocomplete="new-password"
+              />
             </div>
-            <input type="submit" value="Login" id="signin-button" class="btn solid" />
+            <input
+              type="submit"
+              value="Login"
+              id="signin-button"
+              class="btn solid"
+            />
             <p class="social-text">Or Sign in with social platforms</p>
             <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
+              <button class="google-signin-button" onclick="googlelogin()">
+                <a href="" class="social-icon">
+                  <i class="fab fa-google"></i>
+                </a>
+                Sign in with Google
+              </button>
             </div>
+            
           </form>
           <form action="#" class="sign-up-form">
             <h2 class="title">Sign up</h2>
@@ -56,24 +64,20 @@
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" id="psw_signup" autocomplete="new-password" />
+              <input
+                type="password"
+                placeholder="Password"
+                id="psw_signup"
+                autocomplete="new-password"
+              />
             </div>
-            <input type="submit" class="btn" id="signup-button" value="Sign up" />
+            <input
+              type="submit"
+              class="btn"
+              id="signup-button"
+              value="Sign up"
+            />
             <p class="social-text">Or Sign up with social platforms</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
           </form>
         </div>
       </div>
@@ -82,7 +86,10 @@
         <div class="panel left-panel">
           <div class="content">
             <h3>New here ?</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis, ex ratione. Aliquid!</p>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
+              ex ratione. Aliquid!
+            </p>
             <button class="btn transparent" id="sign-up-btn">Sign up</button>
           </div>
           <img src="img/log.svg" class="image" alt="" />
@@ -90,7 +97,10 @@
         <div class="panel right-panel">
           <div class="content">
             <h3>One of us ?</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum laboriosam ad deleniti.</p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
+              laboriosam ad deleniti.
+            </p>
             <button class="btn transparent" id="sign-in-btn">Sign in</button>
           </div>
           <img src="img/register.svg" class="image" alt="" />
@@ -100,5 +110,32 @@
 
     <script type="module" src="myscript.js"></script>
     <script src="app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDeauXhn49R84808Ygqgcie8wi3ypPhAkY",
+        authDomain: "testauth-cf58e.firebaseapp.com",
+        databaseURL: "https://testauth-cf58e-default-rtdb.firebaseio.com/",
+        projectId: "testauth-cf58e",
+        storageBucket: "testauth-cf58e.appspot.com",
+        messagingSenderId: "103862839980",
+        appId: "1:103862839980:web:4ac1f0f65bffae51e50d09",
+      };
+      firebase.initializeApp(config);
+
+      googlelogin = () => {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase
+          .auth()
+          .signInWithPopup(provider)
+          .then(() => {
+            location.href = "http://127.0.0.1:5501/main.html";
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      };
+    </script>
   </body>
 </html>
