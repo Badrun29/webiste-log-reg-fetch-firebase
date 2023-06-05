@@ -22,7 +22,7 @@ const firebaseConfig = {
 	});
 
 	$(".toggle-btn").click(function(){
-		var firebaseRef = firebase.database().ref().child("DHT/jembut");
+		var firebaseRef = firebase.database().ref().child("DHT/relay");
 
 		if (relay == 1) {
 			firebaseRef.set("0"); // Mengubah nilai 1 menjadi string "0"

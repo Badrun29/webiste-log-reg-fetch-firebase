@@ -1,22 +1,16 @@
-// Set new default font family and font color to mimic Bootstrap's default styling
-
-
-// Area Chart Example
-var ctx = document.getElementById("myAreaChart");
-
 
 // Initialize an empty data array
-var data = [];
+var database = firebase.database().ref().child('DHT/temperature');
 
-// Create a new chart
-var ctx = document.getElementById('myAreaChart').getContext('2d');
-var chart = new Chart(ctx, {
+var chartDataHistory = [];
+var ctx = document.getElementById('gaugeChart').getContext('2d');
+var gaugeChart = new Chart(ctx, {
   type: 'line',
   data: {
     labels: [],
     datasets: [{
       label: 'Real-Time Data',
-      data: data,
+      data: [0, 2000],
       borderColor: '#4e73df',
       fill: false
     }]
@@ -34,34 +28,58 @@ var chart = new Chart(ctx, {
         display: true,
         title: {
           display: true,
-          text: 'Value'
+          text: 'Value',
+          font: {
+            size: 16,
+            weight: 'bold'
+          }
+        },
+        ticks: {
+          stepSize: 20,
+          callback: function(value, index, values) {
+            return value + '%';
+          }
+        },
+        grid: {
+          display: true,
+          color: '#dcdcdc'
         }
+      }
+    },
+    layout: {
+      padding: {
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 20
+      }
+    },
+    elements: {
+      point: {
+        radius: 0
+      }
+    },
+    plugins: {
+      legend: {
+        display: false
       }
     }
   }
 });
+// Monitor data changes in Firebase
+database.on('value', function(snapshot) {
+  var value = snapshot.val();
+  var data = gaugeChart.data.datasets[0].data;
 
+  // Add new data to the end of the dataset
+  data.push(value);
+  data.shift(); // Remove the first data point
 
-function generateDataPoint() {
-  var randomValue = Math.floor(Math.random() * 1200) + 1;
-  var timestamp = new Date().toLocaleTimeString();
-
-  // Add the new data point to the chart
-  chart.data.labels.push(timestamp);
-  chart.data.datasets[0].data.push(randomValue);
-
-  // Limit the number of data points displayed to 10
-  if (chart.data.labels.length > 100) {
-    chart.data.labels.shift();
-    chart.data.datasets[0].data.shift();
-  }
 
   // Update the chart
-  chart.update();
-}
+  gaugeChart.update();
+});
 
-// Generate a new data point every second
-setInterval(generateDataPoint, 1000);
 
 // Mendapatkan elemen dengan id "time"
 var timeElement = document.getElementById('time');
