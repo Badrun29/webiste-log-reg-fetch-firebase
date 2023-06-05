@@ -41,7 +41,7 @@ var chart = new Chart(ctx, {
   }
 });
 
-// Function to generate a random data point and update the chart
+
 function generateDataPoint() {
   var randomValue = Math.floor(Math.random() * 1200) + 1;
   var timestamp = new Date().toLocaleTimeString();
@@ -61,7 +61,7 @@ function generateDataPoint() {
 }
 
 // Generate a new data point every second
-setInterval(generateDataPoint, 2000);
+setInterval(generateDataPoint, 1000);
 
 // Mendapatkan elemen dengan id "time"
 var timeElement = document.getElementById('time');

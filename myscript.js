@@ -144,3 +144,29 @@ function signup(){
 function logout(){
   firebase.auth().signOut();
 }
+$(document).ready(function(){
+	var database = firebase.database();
+	var relay;
+	database.ref().on("value", function(snap){
+		relay = snap.val().relay;
+		if(relay == 1){
+			document.getElementById("unact").style.display = "none";
+			document.getElementById("act").style.display = "block";
+		} else {
+			document.getElementById("unact").style.display = "block";
+			document.getElementById("act").style.display = "none";
+		}
+	});
+
+	$(".btn btn-primary").click(function(){
+		var firebaseRef = firebase.database().ref().child("data/ledStatus");
+
+		if (relay == 1) {
+			firebaseRef.set("0"); // Mengubah nilai 1 menjadi string "0"
+			relay = 0;
+		  } else {
+			firebaseRef.set("1"); // Mengubah nilai 1 menjadi string "1"
+			relay = 1;
+		  }
+	})
+});
