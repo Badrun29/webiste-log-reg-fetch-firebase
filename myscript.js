@@ -1,8 +1,18 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
 // import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
-import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
+import {
+  getDatabase,
+  set,
+  ref,
+  update,
+} from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
 // import { getDatabase } from "firebase/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -17,7 +27,6 @@ const firebaseConfig = {
   storageBucket: "testauth-cf58e.appspot.com",
   messagingSenderId: "103862839980",
   appId: "1:103862839980:web:4ac1f0f65bffae51e50d09",
-
 };
 
 // Initialize Firebase
@@ -26,7 +35,6 @@ const auth = getAuth(app);
 const database = getDatabase(app);
 let signinButton = document.getElementById("signin-button");
 let signupButton = document.getElementById("signup-button");
-
 
 signupButton.addEventListener("click", (e) => {
   let name = document.getElementById("name").value;
@@ -43,12 +51,11 @@ signupButton.addEventListener("click", (e) => {
         name: name,
         nohp: nohp,
         email: emailSignup,
-        password: passwordSignup
+        password: passwordSignup,
       })
         .then(() => {
           // Data saved successfully!
           alert("Berhasil! membuat user baru");
-          
         })
         .catch((error) => {
           //the write failed
@@ -71,12 +78,12 @@ signinButton.addEventListener("click", (e) => {
       const user = userCredential.user;
       let lgDate = new Date();
       update(ref(database, "data/" + user.uid), {
-        last_login: lgDate
+        last_login: lgDate,
       })
         .then(() => {
           // Data saved successfully!
           //   alert("user telah sukses login");
-          location.href = "http://127.0.0.1:5501/main.html";
+          location.href = "main.html";
         })
         .catch((error) => {
           //the write failed
@@ -93,7 +100,7 @@ signinButton.addEventListener("click", (e) => {
     .catch((error) => {});
 });
 
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // User is signed in.
     document.getElementById("user_div").style.display = "block";
@@ -102,12 +109,11 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     var user = firebase.auth().currentUser;
 
-    if(user != null){
+    if (user != null) {
       var email_id = user.email;
-      document.getElementById("user_para").innerHTML = "Welcome User : " + email_id;
-
+      document.getElementById("user_para").innerHTML =
+        "Welcome User : " + email_id;
     }
-
   } else {
     // No user is signed in.
     document.getElementById("user_div").style.display = "none";
@@ -116,57 +122,61 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
-function login(){
-
+function login() {
   var userEmail = document.getElementById("email_field").value;
   var userPass = document.getElementById("password_field").value;
 
-  firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    window.alert("Error : " + errorMessage);
-  });
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(userEmail, userPass)
+    .catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      window.alert("Error : " + errorMessage);
+    });
 }
 
-function signup(){
-
+function signup() {
   var userEmail = document.getElementById("email_field").value;
   var userPass = document.getElementById("password_field").value;
   console.log(userEmail);
   console.log(userPass);
-  firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    window.alert("Error : " + errorMessage);
-  });
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(userEmail, userPass)
+    .catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      window.alert("Error : " + errorMessage);
+    });
 }
 
-function logout(){
+function logout() {
   firebase.auth().signOut();
 }
-$(document).ready(function(){
-	var database = firebase.database();
-	var relay;
-	database.ref().on("value", function(snap){
-		relay = snap.val().relay;
-		if(relay == 1){
-			document.getElementById("unact").style.display = "none";
-			document.getElementById("act").style.display = "block";
-		} else {
-			document.getElementById("unact").style.display = "block";
-			document.getElementById("act").style.display = "none";
-		}
-	});
+$(document).ready(function () {
+  var database = firebase.database();
+  var relay;
+  database.ref().on("value", function (snap) {
+    relay = snap.val().relay;
+    if (relay == 1) {
+      document.getElementById("unact").style.display = "none";
+      document.getElementById("act").style.display = "block";
+    } else {
+      document.getElementById("unact").style.display = "block";
+      document.getElementById("act").style.display = "none";
+    }
+  });
 
-	$(".btn btn-primary").click(function(){
-		var firebaseRef = firebase.database().ref().child("data/ledStatus");
+  $(".btn btn-primary").click(function () {
+    var firebaseRef = firebase.database().ref().child("data/ledStatus");
 
-		if (relay == 1) {
-			firebaseRef.set("0"); // Mengubah nilai 1 menjadi string "0"
-			relay = 0;
-		  } else {
-			firebaseRef.set("1"); // Mengubah nilai 1 menjadi string "1"
-			relay = 1;
-		  }
-	})
+    if (relay == 1) {
+      firebaseRef.set("0"); // Mengubah nilai 1 menjadi string "0"
+      relay = 0;
+    } else {
+      firebaseRef.set("1"); // Mengubah nilai 1 menjadi string "1"
+      relay = 1;
+    }
+  });
 });
